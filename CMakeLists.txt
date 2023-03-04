@@ -7,6 +7,8 @@ find_package(OpenCV REQUIRED)
 
 add_definitions(-DASSETS_DIR="${CMAKE_SOURCE_DIR}/assets/")
 
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/include/util/nfde")
+
 add_executable(${PROJECT_NAME}
         src/util/file-util.cpp
         src/util/image-util.cpp
@@ -16,4 +18,4 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR}/include/labs ${CMAKE_CURRENT_LIST_DIR}/include/util)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} nfd)

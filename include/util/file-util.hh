@@ -4,12 +4,13 @@
 #include <iostream>
 #include <numeric>
 
-#include "portable-file-dialogs.h"
+#include "nfd.hpp"
 
 namespace utcn::ip {
 class FileUtil {
  private:
   static inline std::string DEFAULT_IMAGES_PATH = ASSETS_DIR "Images/*";
+  static std::string getFileOrDir(const bool isFile = true);
 
  public:
   static std::string getSingleFileAbsPath();

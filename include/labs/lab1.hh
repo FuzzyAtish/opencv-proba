@@ -31,6 +31,8 @@ class Lab1 : public Lab {
 
   static void testOpenImage();
 
+  static void testOpenImagesFld();
+
  public:
   void runLab() override;
 };

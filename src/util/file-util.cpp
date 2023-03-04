@@ -1,16 +1,24 @@
 #include "file-util.hh"
 
-std::string utcn::ip::FileUtil::getSingleFileAbsPath() {
-  // const std::vector<std::string> selectedFile = pfd::open_file("Select a single file", DEFAULT_IMAGES_PATH).result();
-  const std::vector<std::string> selectedFile = pfd::open_file("Select a single file").result();
-  if (!selectedFile.empty()) {
-    return std::accumulate(selectedFile.begin(), selectedFile.end(), std::string{});
+std::string utcn::ip::FileUtil::getFileOrDir(const bool isFile) {
+  NFD::Guard nfdGuard;
+  NFD::UniquePath outPath;
+  nfdresult_t result;
+  if (isFile) {
+    result = NFD::OpenDialog(outPath);
+  } else {
+    result = NFD::PickFolder(outPath);
+  }
+  if (result == NFD_OKAY) {
+    return outPath.get();
   }
   return "";
 }
 
+std::string utcn::ip::FileUtil::getSingleFileAbsPath() {
+  return getFileOrDir();
+}
+
 std::string utcn::ip::FileUtil::getDirectoryAbsPath() {
-  // const auto dir = pfd::select_folder("Select any directory", ASSETS_DIR).result();
-  const auto dir = pfd::select_folder("Select any directory").result();
-  return dir.empty() ? "" : dir;
+  return getFileOrDir(false);
 }
