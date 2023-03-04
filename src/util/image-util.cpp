@@ -1,6 +1,6 @@
 #include "image-util.hh"
 
-void utcn::ip::ImageUtil::resizeImg(cv::Mat src, cv::Mat &dst, int maxSize,
+void utcn::ip::ImageUtil::resizeImg(const cv::Mat& src, cv::Mat &dst, int maxSize,
                                     bool interpolate) {
   double ratio = 1;
   double w = src.cols;

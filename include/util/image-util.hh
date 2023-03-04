@@ -7,7 +7,7 @@
 namespace utcn::ip {
 class ImageUtil {
  public:
-  static void resizeImg(cv::Mat src, cv::Mat &dst, int maxSize,
+  static void resizeImg(const cv::Mat& src, cv::Mat &dst, int maxSize,
                         bool interpolate);
 };
 }  // namespace utcn::ip
