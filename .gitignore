@@ -1,0 +1,6 @@
+# IDE Stuff
+.idea/
+
+# CMake stuff
+build/
+cmake-build-*/
