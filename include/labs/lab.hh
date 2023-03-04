@@ -5,6 +5,7 @@
 #include <map>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/opencv.hpp>
 
 namespace utcn::ip {
 class Lab {

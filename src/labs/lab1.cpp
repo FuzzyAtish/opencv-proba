@@ -29,6 +29,21 @@ void utcn::ip::Lab1::runLab() {
       case 7:
         testBGR2HSV();
         break;
+      case 8:
+        testResize();
+        break;
+      case 9:
+        testCanny();
+        break;
+      case 10:
+        testVideoSequence();
+        break;
+      case 11:
+        testSnap();
+        break;
+      case 12:
+        testMouseClick();
+        break;
       default:
         std::cout << "Invalid selection" << std::endl;
     }
@@ -227,5 +242,161 @@ void utcn::ip::Lab1::testBGR2HSV() {
     cv::imshow("V", V);
 
     cv::waitKey();
+  }
+}
+
+void utcn::ip::Lab1::testResize() {
+  const std::string abs_image_path = fileutil::getSingleFileAbsPath();
+  if (!abs_image_path.empty()) {
+    cv::Mat src;
+    src = cv::imread(abs_image_path);
+    cv::Mat dst1, dst2;
+    // without interpolation
+    imageutil::resizeImg(src, dst1, 320, false);
+    // with interpolation
+    imageutil::resizeImg(src, dst2, 320, true);
+    cv::imshow("input image", src);
+    cv::imshow("resized image (without interpolation)", dst1);
+    cv::imshow("resized image (with interpolation)", dst2);
+    cv::waitKey();
+  }
+}
+
+void utcn::ip::Lab1::testCanny() {
+  const std::string abs_image_path = fileutil::getSingleFileAbsPath();
+  if (!abs_image_path.empty()) {
+    cv::Mat src, dst, gauss;
+    src = imread(abs_image_path, cv::IMREAD_GRAYSCALE);
+    double k = 0.4;
+    int pH = 50;
+    int pL = (int)k * pH;
+    cv::GaussianBlur(src, gauss, cv::Size(5, 5), 0.8, 0.8);
+    cv::Canny(gauss, dst, pL, pH, 3);
+    cv::imshow("input image", src);
+    cv::imshow("canny", dst);
+    cv::waitKey();
+  }
+};
+
+void utcn::ip::Lab1::testVideoSequence() {
+  /* const std::string path_to_vid = ASSETS_DIR "Videos/rubic.avi";
+  cv::VideoCapture cap(path_to_vid);  // off-line video from file
+  // VideoCapture cap(0);	// live video from webcam
+  if (!cap.isOpened()) {
+    std::cout << "Cannot open video capture device" << std::endl;
+    cv::waitKey(0);
+    return;
+  }
+
+  cv::Mat edges;
+  cv::Mat frame;
+  uchar c;
+
+  while (cap.read(frame)) {
+    cv::Mat grayFrame;
+    cv::cvtColor(frame, grayFrame, cv::COLOR_BGR2GRAY);
+    cv::Canny(grayFrame, edges, 40, 100, 3);
+    cv::imshow("source", frame);
+    cv::imshow("gray", grayFrame);
+    cv::imshow("edges", edges);
+    c = cv::waitKey(100);  // waits 100ms and advances to the next frame
+    if (c == 27) {
+      // press ESC to exit
+      std::cout << "ESC pressed - capture finished" << std::endl;
+      break;  // ESC pressed
+    };
+  } */
+}
+
+void utcn::ip::Lab1::testSnap() {
+  /* cv::VideoCapture cap(
+      0);                 // open the deafult camera (i.e. the built in web cam)
+  if (!cap.isOpened()) {  // openenig the video device failed
+    printf("Cannot open video capture device.\n");
+    return;
+  }
+
+  cv::Mat frame;
+  char numberStr[256];
+  char fileName[256];
+
+  // video resolution
+  cv::Size capS = cv::Size((int)cap.get(cv::CAP_PROP_FRAME_WIDTH),
+                           (int)cap.get(cv::CAP_PROP_FRAME_HEIGHT));
+
+  // Display window
+  const char *WIN_SRC = "Src";  // window for the source frame
+  cv::namedWindow(WIN_SRC, cv::WINDOW_AUTOSIZE);
+  cv::moveWindow(WIN_SRC, 0, 0);
+
+  const char *WIN_DST = "Snapped";  // window for showing the snapped frame
+  cv::namedWindow(WIN_DST, cv::WINDOW_AUTOSIZE);
+  cv::moveWindow(WIN_DST, capS.width + 10, 0);
+
+  uchar c;
+  int frameNum = -1;
+  int frameCount = 0;
+
+  for (;;) {
+    cap >> frame;  // get a new frame from camera
+    if (frame.empty()) {
+      printf("End of the video file\n");
+      break;
+    }
+
+    ++frameNum;
+
+    cv::imshow(WIN_SRC, frame);
+
+    c = cv::waitKey(10);  // waits a key press to advance to the next frame
+    if (c == 27) {
+      // press ESC to exit
+      std::cout << "ESC pressed - capture finished" << std::endl;
+      break;  // ESC pressed
+    }
+    if (c == 115) {  //'s' pressed - snap the image to a file
+      frameCount++;
+      fileName[0] = '\0';
+      sprintf(numberStr, "%d", frameCount);
+      strcat(fileName, ASSETS_DIR "Images/A");
+      strcat(fileName, numberStr);
+      strcat(fileName, ".bmp");
+      bool bSuccess = cv::imwrite(fileName, frame);
+      if (!bSuccess) {
+        std::cout << "Error writing the snapped image" << std::endl;
+      } else
+        cv::imshow(WIN_DST, frame);
+    }
+  } */
+}
+
+void utcn::ip::Lab1::myCallBackFunc(int event, int x, int y, int flags,
+                                    void *param) {
+  // More examples:
+  // http://opencvexamples.blogspot.com/2014/01/detect-mouse-clicks-and-moves-on-image.html
+  auto *src = (cv::Mat *)param;
+  if (event == cv::EVENT_LBUTTONDOWN) {
+    printf("Pos(x,y): %d,%d  Color(RGB): %d,%d,%d\n", x, y,
+           (int)(*src).at<cv::Vec3b>(y, x)[2],
+           (int)(*src).at<cv::Vec3b>(y, x)[1],
+           (int)(*src).at<cv::Vec3b>(y, x)[0]);
+  }
+}
+
+void utcn::ip::Lab1::testMouseClick() {
+  const std::string abs_image_path = fileutil::getSingleFileAbsPath();
+  if (!abs_image_path.empty()) {
+    cv::Mat src = cv::imread(abs_image_path);
+    // Create a window
+    cv::namedWindow("My Window", 1);
+
+    // set the callback function for any mouse event
+    cv::setMouseCallback("My Window", myCallBackFunc, &src);
+
+    // show the image
+    cv::imshow("My Window", src);
+
+    // Wait until user press some key
+    cv::waitKey(0);
   }
 }

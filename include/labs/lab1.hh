@@ -42,6 +42,18 @@ class Lab1 : public Lab {
 
   static void testBGR2HSV();
 
+  static void testResize();
+
+  static void testCanny();
+
+  static void testVideoSequence();
+
+  static void testSnap();
+
+  static void myCallBackFunc(int event, int x, int y, int flags, void *param);
+
+  static void testMouseClick();
+
  public:
   void runLab() override;
 };
