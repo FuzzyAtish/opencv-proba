@@ -499,4 +499,5 @@ void utcn::ip::Lab1::testPrintInverseOfMatrix() {
   cv::Mat inverted = MATRIX3X3.inv();
   std::cout << "Inverse: " << std::endl << inverted << std::endl;
   std::cin.get();
+  std::cin.get();
 }
