@@ -26,7 +26,22 @@ class Lab1 : public Lab {
       {10, "Edges in a video sequence"},
       {11, "Snap frame from live video"},
       {12, "Mouse callback demo"},
+      {13, "Change the gray levels of an image by an additive factor"},
+      {14, "Change the gray levels of an image by a multiplicative factor"},
+      {15, "Draw a square with four different colors"},
+      {16, "3x3 float matrix, determine its inverse"},
   };
+
+  static inline uchar ADDITIVE_FACTOR = 54;
+
+  static inline uchar MULTIPLICATIVE_FACTOR = 3;
+
+  static inline cv::Vec3b WHITE{255, 255, 255};
+  static inline cv::Vec3b RED{0, 0, 255};
+  static inline cv::Vec3b GREEN{0, 255, 0};
+  static inline cv::Vec3b YELLOW{0, 255, 255};
+  static inline float MATRIX_VALS[9] = {2, 3, 1, 3, 4, 1, 3, 7, 2};
+  static inline cv::Mat MATRIX3X3{3, 3, CV_32FC1, MATRIX_VALS};
 
   static void testOpenImage();
 
@@ -50,9 +65,20 @@ class Lab1 : public Lab {
 
   static void testSnap();
 
-  static void myCallBackFunc(int event, int x, int y, int flags, void *param);
+  static void myCallBackFunc(int event, int x, int y, int flags, void* param);
 
   static void testMouseClick();
+
+  static cv::Mat changeByFactor(const cv::Mat& orig_pic, bool isAdditive,
+                                uchar factor);
+
+  static void testChangeGrayLevelsAdditive();
+
+  static void testChangeGrayLevelsMultiplicative();
+
+  static void testDrawFourSquare();
+
+  static void testPrintInverseOfMatrix();
 
  public:
   void runLab() override;

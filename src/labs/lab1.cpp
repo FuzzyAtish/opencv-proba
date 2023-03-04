@@ -44,6 +44,18 @@ void utcn::ip::Lab1::runLab() {
       case 12:
         testMouseClick();
         break;
+      case 13:
+        testChangeGrayLevelsAdditive();
+        break;
+      case 14:
+        testChangeGrayLevelsMultiplicative();
+        break;
+      case 15:
+        testDrawFourSquare();
+        break;
+      case 16:
+        testPrintInverseOfMatrix();
+        break;
       default:
         std::cout << "Invalid selection" << std::endl;
     }
@@ -405,4 +417,86 @@ void utcn::ip::Lab1::testMouseClick() {
     // Wait until user press some key
     cv::waitKey(0);
   }
+}
+
+cv::Mat utcn::ip::Lab1::changeByFactor(const cv::Mat &orig_pic,
+                                       const bool isAdditive,
+                                       const uchar factor) {
+  int height = orig_pic.rows;
+  int width = orig_pic.cols;
+  cv::Mat dst = cv::Mat(height, width, CV_8UC1);
+
+  uchar *lpSrc = orig_pic.data;
+  uchar *lpDst = dst.data;
+
+  int w = (int)orig_pic.step;  // no dword alignment is done !!!
+  for (int i = 0; i < height; i++)
+    for (int j = 0; j < width; j++) {
+      uchar val = lpSrc[i * w + j];
+      //  lpDst[i * w + j] = val + factor;
+      if (isAdditive) {
+        lpDst[i * w + j] = val + factor > 255 ? 255 : val + factor;
+      } else {
+        lpDst[i * w + j] = val * factor > 255 ? 255 : val * factor;
+      }
+    }
+  return dst;
+}
+
+void utcn::ip::Lab1::testChangeGrayLevelsAdditive() {
+  const std::string abs_image_path = fileutil::getSingleFileAbsPath();
+  if (!abs_image_path.empty()) {
+    cv::Mat src = imread(abs_image_path, cv::IMREAD_GRAYSCALE);
+    cv::Mat dst = changeByFactor(src, true, ADDITIVE_FACTOR);
+    cv::imshow("Original", src);
+    cv::imshow("Modified", dst);
+    cv::waitKey();
+  }
+}
+
+void utcn::ip::Lab1::testChangeGrayLevelsMultiplicative() {
+  const std::string abs_image_path = fileutil::getSingleFileAbsPath();
+  if (!abs_image_path.empty()) {
+    cv::Mat src = imread(abs_image_path, cv::IMREAD_GRAYSCALE);
+    cv::Mat dst = changeByFactor(src, false, MULTIPLICATIVE_FACTOR);
+    cv::imshow("Original", src);
+    cv::imshow("Modified", dst);
+    const std::string path_to_dst = ASSETS_DIR "Images/grayscale_multi.bmp";
+    imwrite(path_to_dst, dst);
+    cv::waitKey();
+  }
+}
+
+void utcn::ip::Lab1::testDrawFourSquare() {
+  cv::Mat square(256, 256, CV_8UC3);
+
+  int height = square.rows;
+  int width = square.cols;
+  //  cv::Vec3b *lpSrc = square.data;
+
+  int w = (int)square.step;
+  for (int i = 0; i < height; i++)
+    for (int j = 0; j < width; j++) {
+      if (i > 128 && j > 128) {
+        //        lpSrc[i * w + j] = YELLOW;
+        square.at<cv::Vec3b>(i, j) = YELLOW;
+      } else if (i > 128 && j <= 128) {
+        square.at<cv::Vec3b>(i, j) = RED;
+      } else if (i <= 128 && j > 128) {
+        square.at<cv::Vec3b>(i, j) = GREEN;
+      } else {
+        square.at<cv::Vec3b>(i, j) = WHITE;
+      }
+    }
+  cv::imshow("Multi-color Square", square);
+  cv::waitKey();
+}
+
+void utcn::ip::Lab1::testPrintInverseOfMatrix() {
+  std::cout << "Original matrix: " << std::endl
+            << MATRIX3X3 << std::endl
+            << std::endl;
+  cv::Mat inverted = MATRIX3X3.inv();
+  std::cout << "Inverse: " << std::endl << inverted << std::endl;
+  std::cin.get();
 }
