@@ -49,3 +49,13 @@ The [C/C++ Extension Pack](https://marketplace.visualstudio.com/items?itemName=m
 
 ![6_code_cpp_extension_pack.png](assets%2FREADME%2F6_code_cpp_extension_pack.png)
 
+Afterwards, once you have cloned or set up the project, make sure to select the **kit that corresponds to the one that you have installed in MSYS2 UCRT**
+
+By default, the kits might not be configured and listed, and in that case you will have to click on the **Scan for kits** option for it to first find  
+If you correctly added it to the path inside the environment variables, then VS Code should locate it
+
+On the picture below you can see the installed compilers, and you will want to select the **x86_64-w64-windows-gnu** option, which in this is case is the first one below Unspecified 
+
+![7_code_cpp_kit.png](assets%2FREADME%2F7_code_cpp_kit.png)
+
+Afterwards, you should be able to build / run your project
