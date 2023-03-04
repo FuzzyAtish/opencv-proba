@@ -279,6 +279,9 @@ void utcn::ip::Lab1::testCanny() {
 };
 
 void utcn::ip::Lab1::testVideoSequence() {
+  /* *** WARNING *** */
+  /* UNCOMMENTING THE CONTENTS WITHIN THIS METHOD */
+  /* COULD LEAD TO THE APPLICATION NOT WORKING */
   /* const std::string path_to_vid = ASSETS_DIR "Videos/rubic.avi";
   cv::VideoCapture cap(path_to_vid);  // off-line video from file
   // VideoCapture cap(0);	// live video from webcam
@@ -309,6 +312,9 @@ void utcn::ip::Lab1::testVideoSequence() {
 }
 
 void utcn::ip::Lab1::testSnap() {
+  /* *** WARNING *** */
+  /* UNCOMMENTING THE CONTENTS WITHIN THIS METHOD */
+  /* COULD LEAD TO THE APPLICATION NOT WORKING */
   /* cv::VideoCapture cap(
       0);                 // open the deafult camera (i.e. the built in web cam)
   if (!cap.isOpened()) {  // openenig the video device failed
