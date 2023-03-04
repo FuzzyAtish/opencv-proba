@@ -10,7 +10,6 @@
 
 using fileutil = utcn::ip::FileUtil;
 using imageutil = utcn::ip::ImageUtil;
-namespace fs = std::filesystem;
 
 namespace utcn::ip {
 class Lab1 : public Lab {
@@ -32,6 +31,16 @@ class Lab1 : public Lab {
   static void testOpenImage();
 
   static void testOpenImagesFld();
+
+  static void testNegativeImage();
+
+  static void testNegativeImageFast();
+
+  static void testColor2Gray();
+
+  static void testImageOpenAndSave();
+
+  static void testBGR2HSV();
 
  public:
   void runLab() override;
