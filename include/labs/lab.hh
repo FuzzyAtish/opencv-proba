@@ -7,6 +7,12 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 
+#include "file-util.hh"
+#include "image-util.hh"
+
+using fileutil = utcn::ip::FileUtil;
+using imageutil = utcn::ip::ImageUtil;
+
 namespace utcn::ip {
 class Lab {
  protected:

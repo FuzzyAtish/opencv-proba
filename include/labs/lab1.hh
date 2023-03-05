@@ -4,12 +4,7 @@
 #include <chrono>
 #include <filesystem>
 
-#include "file-util.hh"
-#include "image-util.hh"
 #include "lab.hh"
-
-using fileutil = utcn::ip::FileUtil;
-using imageutil = utcn::ip::ImageUtil;
 
 namespace utcn::ip {
 class Lab1 : public Lab {
