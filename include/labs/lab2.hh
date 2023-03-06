@@ -1,6 +1,8 @@
 #ifndef LAB2_HH
 #define LAB2_HH
 
+#include <algorithm>
+
 #include "lab.hh"
 
 namespace utcn::ip {
