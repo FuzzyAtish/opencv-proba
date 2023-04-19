@@ -34,6 +34,7 @@ class Lab2 : public Lab {
 
  public:
   void runLab() override;
+  static bool isInside(const cv::Mat& img, int i, int j);
 };
 }  // namespace utcn::ip
 

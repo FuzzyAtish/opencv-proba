@@ -193,7 +193,7 @@ void utcn::ip::Lab2::testRGBToHSV() {
   }
 }
 
-bool isInside(const cv::Mat& img, int i, int j) {
+bool utcn::ip::Lab2::isInside(const cv::Mat& img, int i, int j) {
   return i >= 0 && i <= img.rows && j >= 0 && j <= img.cols;
 }
 
